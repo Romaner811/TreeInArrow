@@ -8,9 +8,9 @@ namespace ThreeInARow.Basic
 {
     using IFace;
 
-    class BasicSlotFactory : ISlotFactory
+    public class BasicSlotFactory : ISlotFactory
     {
-        public ISlot Create()
+        public ISlot Create(int x, int y)
         {
             return new BasicSlot();
         }

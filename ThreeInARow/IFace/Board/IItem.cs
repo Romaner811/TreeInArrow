@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThreeInARow.IFace
 {
-    interface ISlotFactory
+    public interface IItem
     {
-        ISlot Create();
+        int TypeID { get; }
     }
 }

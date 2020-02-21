@@ -8,13 +8,11 @@ namespace ThreeInARow.Basic
 {
     using IFace;
 
-    public class BasicItem : IItem
+    public class BasicItemFactory : IItemFactory
     {
-        public BasicItem(int typeID)
+        public IItem Create(int typeID)
         {
-            this.TypeID = typeID;
+            return new BasicItem(typeID);
         }
-
-        public int TypeID { get; private set; }
     }
 }

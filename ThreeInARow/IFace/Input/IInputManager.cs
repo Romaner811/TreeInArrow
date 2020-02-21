@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThreeInARow.IFace
 {
-    interface IBoard
+    public interface IInputManager
     {
-        int Width { get; }
-        int Heigth { get; }
-        ISlot GetSlot(int x, int y);
-        ISlot GetSlot(IPos pos);
+        IMove GetMove();
     }
 }

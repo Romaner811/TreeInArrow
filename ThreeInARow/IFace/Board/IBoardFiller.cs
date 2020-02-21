@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThreeInARow.IFace
 {
-    interface IRule
+    public interface IBoardFiller
     {
-        IReadOnlyList<IMatchGroup> FindMatches(IBoard board, int x, int y);
-        void Apply(IBoard board, IMatchGroup group);
+        IItem GetSuitableItem(IBoard board, IPos pos);
     }
 }

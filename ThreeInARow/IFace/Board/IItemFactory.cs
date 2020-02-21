@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThreeInARow.IFace
 {
-    interface IItem
+    public interface IItemFactory
     {
-        int TypeID { get; }
+        IItem Create(int itemID);
     }
 }

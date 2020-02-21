@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ThreeInARow.IFace
 {
-    interface IMatchGroup
+    public interface IRule
     {
-        IRule Rule { get; }
-        IReadOnlyList<IPos> SlotPositions { get; }
+        IBehavior ProduceRelevantBehavior(IBoard board);
     }
 }

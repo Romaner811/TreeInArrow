@@ -6,9 +6,5 @@ using System.Threading.Tasks;
 
 namespace ThreeInARow.IFace
 {
-    interface IPos
-    {
-        int X { get; }
-        int Y { get; }
-    }
+    public enum Direction { Up, Down, Left, Rigth }
 }

@@ -8,7 +8,7 @@ namespace ThreeInARow.Basic
 {
     using IFace;
 
-    class BasicBoard : IBoard
+    public class BasicBoard : IBoard
     {
         private ISlot[,] slots;
 
@@ -28,7 +28,7 @@ namespace ThreeInARow.Basic
             {
                 for (int y = 0; y < heigth; y++)
                 {
-                    slots[x, y] = factory.Create();
+                    slots[x, y] = factory.Create(x, y);
                 }
             }
 

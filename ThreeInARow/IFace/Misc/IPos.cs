@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ThreeInARow.IFace
 {
-    interface ISlot
+    public interface IPos
     {
-        void SetItem(IItem item);
-        IItem GetItem();
-        bool IsEmpty { get; }
+        int X { get; }
+        int Y { get; }
+
+        IPos StepInDirection(Direction dir);
     }
 }

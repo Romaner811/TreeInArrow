@@ -8,7 +8,7 @@ namespace ThreeInARow.Basic
 {
     using IFace;
 
-    class BasicSlot : ISlot
+    public class BasicSlot : ISlot
     {
         private IItem item = null;
 
