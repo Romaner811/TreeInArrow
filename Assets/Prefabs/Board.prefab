@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1797937334678172334}
   - component: {fileID: 5804320551901091434}
+  - component: {fileID: 3452665617842635699}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -67,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -229371439
+  m_SortingLayerID: -131648669
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 84613e57cdce803408de603045a35742, type: 3}
@@ -81,3 +82,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3452665617842635699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594842200952157604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60350947f086fe644ade03b75461e476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Width: 0
+  Heigth: 0
+  SlotPrefab: {fileID: 0}
