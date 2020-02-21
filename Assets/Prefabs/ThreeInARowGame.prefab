@@ -49,14 +49,11 @@ MonoBehaviour:
   SlotPrefab: {fileID: 1815079856710556131, guid: 17f3e4fcd96c12a469623cb22d5895c0,
     type: 3}
   BoardGameObject: {fileID: 999007901574054901}
-  RedCirclePrefab: {fileID: 1734646121278786760, guid: c7dcc9b5b3992b840b0aa3a73fdebd44,
-    type: 3}
-  GreenCirclePrefab: {fileID: 8228651288595548146, guid: 4695cae1ceaf34646aa70b2cc4630f78,
-    type: 3}
-  YellowCirclePrefab: {fileID: 2676750275726715536, guid: febebe59cf960194085afb4c3131da08,
-    type: 3}
-  BlueCirclePrefab: {fileID: 2235310341597893887, guid: 900c8ee2754ec284eb9bded842697b35,
-    type: 3}
+  ItemPrefabs:
+  - {fileID: 1734646121278786760, guid: c7dcc9b5b3992b840b0aa3a73fdebd44, type: 3}
+  - {fileID: 8228651288595548146, guid: 4695cae1ceaf34646aa70b2cc4630f78, type: 3}
+  - {fileID: 2235310341597893887, guid: 900c8ee2754ec284eb9bded842697b35, type: 3}
+  - {fileID: 2676750275726715536, guid: febebe59cf960194085afb4c3131da08, type: 3}
 --- !u!1001 &3017283517359027793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,6 +120,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Board
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594842200952157604, guid: 1edb290d58805ff41b27cf2ad3eddec8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1edb290d58805ff41b27cf2ad3eddec8, type: 3}
