@@ -55,10 +55,12 @@ public class UserInput : MonoBehaviour
     public bool CheckSlotSwap(Slot one, Slot two)
     {
         Vector2Int dir = two.BoardPosition - one.BoardPosition;
-        print($"Swipe {this.start.BoardPosition}>{dir}: {this.start} -> {this.end}"); // debug
-        //((direction.x * direction.y) == 0) && // non-diagonal.
-        // TODO
-        return true;
+
+        return (
+            ((dir.x == 0) && (-1 <= dir.y) && (dir.y <= 1))
+            ||
+            ((dir.y == 0) && (-1 <= dir.x) && (dir.x <= 1))
+            );
     }
 
     public void ReportDragEnd()
@@ -67,6 +69,7 @@ public class UserInput : MonoBehaviour
         {
             if (this.CheckSlotSwap(this.start, this.end))
             {
+                print($"Swipe {this.start.BoardPosition}>{this.end.BoardPosition - this.start.BoardPosition}: {this.start} -> {this.end}"); // debug
                 this.SwapItems(this.start, this.end);
             }
         }
