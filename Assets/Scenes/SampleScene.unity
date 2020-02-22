@@ -271,5 +271,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThreeInARowGame
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7858015218833310595, guid: e63b8b68aa237024b98445fc3763d909,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3931972794716207916, guid: e63b8b68aa237024b98445fc3763d909, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e63b8b68aa237024b98445fc3763d909, type: 3}
