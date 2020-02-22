@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SlotBoard: {fileID: 447508145009620450}
+  StreakRuleScript: {fileID: 1116475036659369396}
 --- !u!114 &1116475036659369396
 MonoBehaviour:
   m_ObjectHideFlags: 0
