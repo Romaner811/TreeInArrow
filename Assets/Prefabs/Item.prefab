@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ac7e1192324c247bf36c9fff4265a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProgressSpeed: 0.01
+  ProgressSpeed: 0.05
 --- !u!114 &1252768041935142510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,4 +124,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Renderer: {fileID: 8296844476102154023}
-  ExplosionSpeed: 0.01
+  ExplosionSpeed: 0.005
