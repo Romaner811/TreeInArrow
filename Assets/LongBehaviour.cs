@@ -7,11 +7,16 @@ public class LongBehaviour : MonoBehaviour
     public static int RunningBehaviors { get; private set; } = 0;
 
     public float Progress { get; private set; }  // percentage
-    public bool IsFinished { get { return this.Progress >= 1f; } }
+    public bool IsFinished { get { return !this.enabled; } }
 
     void Awake()
     {
         this.enabled = false;
+    }
+
+    public bool CheckProgressComplete()
+    {
+        return this.Progress >= 1f;
     }
 
     public void Begin()
@@ -30,11 +35,11 @@ public class LongBehaviour : MonoBehaviour
 
     public void Step(float step)
     {
-        this.Progress = Mathf.Min(1f, this.Progress + step);
-        if (this.IsFinished)
+        if (this.CheckProgressComplete())
         {
             this.Finish();
         }
+        this.Progress = Mathf.Min(1f, this.Progress + step);
     }
 
     public void Finish()
