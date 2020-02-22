@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class StreakTracker {
     public int LastStreakSize { get; private set; }
+    public int MinStreakSize { get; private set; }
     public Item LastTrackedValue { get { return this.streak[0]; } }
 
     private readonly Item[] streak;
 
-    public StreakTracker(int maxStreakSize)
+    public StreakTracker(int minStreakSize, int maxStreakSize)
     {
+        this.MinStreakSize = minStreakSize;
         this.streak = new Item[maxStreakSize];
     }
 
@@ -36,7 +38,7 @@ public class StreakTracker {
         }
         else
         {
-            if (this.LastTrackedValue != null)
+            if (this.LastTrackedValue != null && this.LastStreakSize >= this.MinStreakSize)
             {
                 ret = this.GetStreak();
             }
@@ -101,8 +103,8 @@ public class ItemStreakRule : MonoBehaviour
 
         for (int i = 0; i < maxSize; i++)
         {
-            StreakTracker horizontalTracker = new StreakTracker(this.SlotBoard.Width);
-            StreakTracker verticalTracker = new StreakTracker(this.SlotBoard.Heigth);
+            StreakTracker horizontalTracker = new StreakTracker(this.StreakLength, this.SlotBoard.Width);
+            StreakTracker verticalTracker = new StreakTracker(this.StreakLength, this.SlotBoard.Heigth);
 
             for (int j = 0; j < maxSize; j++)
             {
