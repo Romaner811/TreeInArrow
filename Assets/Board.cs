@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    private UserInput inputer;
-
-    private void Awake()
-    {
-        this.inputer = this.GetComponent<UserInput>();
-    }
+    public UserInput Inputer;
 
     public int Width, Heigth;
 
@@ -41,7 +36,7 @@ public class Board : MonoBehaviour
 
         Slot slot = slotObject.GetComponent<Slot>();
         slot.BoardPosition = new Vector2Int(x, y);
-        slot.Inputer = this.inputer;
+        slot.Inputer = this.Inputer;
 
         slotObject.SetActive(true);
 

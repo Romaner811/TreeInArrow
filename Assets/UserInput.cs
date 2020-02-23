@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
+    public ItemStreakRule ItemStreakMatcher;
+
     public int MouseButtonID;
+    public IList<Vector2Int> MoveDirections = new List<Vector2Int>()
+    {
+        Vector2Int.up, Vector2Int.down,
+        Vector2Int.right, Vector2Int.left
+    };
 
     private Slot start;
     private Slot end;
@@ -34,11 +41,25 @@ public class UserInput : MonoBehaviour
 
         this.end = end;
 
-        if (end == null)
+        if (this.CheckSlotSwap(this.start, this.end))
         {
-            return;
+            this.PreviewMove();
+        }
+    }
+
+    public void ReportDragEnd()
+    {
+        if (this.CheckSlotSwap(this.start, this.end))
+        {
+            print($"Swipe {this.start.BoardPosition}>{this.end.BoardPosition - this.start.BoardPosition}: {this.start} -> {this.end}"); // debug
+            this.SwapItems(this.start, this.end);
         }
 
+        this.ResetTracking();
+    }
+
+    public void PreviewMove()
+    {
         print($"Dragg {this.start.BoardPosition} -> {this.end.BoardPosition - this.start.BoardPosition}"); // debug
         Debug.DrawLine(
             this.start.transform.position,
@@ -52,44 +73,40 @@ public class UserInput : MonoBehaviour
         );
     }
 
-    public bool CheckSlotSwap(Slot one, Slot two)
+    private void SwapItems(Slot src, Slot dst)
     {
-        Vector2Int dir = two.BoardPosition - one.BoardPosition;
-
-        return (
-            ((dir.x == 0) && (-1 <= dir.y) && (dir.y <= 1))
-            ||
-            ((dir.y == 0) && (-1 <= dir.x) && (dir.x <= 1))
-            );
-    }
-
-    public void ReportDragEnd()
-    {
-        if (this.start != null && this.end != null)
-        {
-            if (this.CheckSlotSwap(this.start, this.end))
-            {
-                print($"Swipe {this.start.BoardPosition}>{this.end.BoardPosition - this.start.BoardPosition}: {this.start} -> {this.end}"); // debug
-                this.SwapItems(this.start, this.end);
-            }
-        }
-
-        this.ResetTracking();
-    }
-
-    private void SwapItems(Slot one, Slot two)
-    {
-        Item itemOne = one.GetItem();
-        Item itemTwo = two.GetItem();
+        Item itemOne = src?.GetItem();
+        Item itemTwo = dst?.GetItem();
 
         itemOne?.PlaceInto(null);
-        itemTwo?.PlaceInto(one);
-        itemOne?.PlaceInto(two);
+        itemTwo?.PlaceInto(src);
+        itemOne?.PlaceInto(dst);
+    }
 
-        //itemOne.PlaceInto(null);
-        //itemTwo.PlaceInto(null);
+    public bool CheckSlotSwap(Slot src, Slot dst)
+    {
+        if (this.start == null || this.end == null)
+        {
+            return false;
+        }
 
-        //itemOne.PlaceInto(two);
-        //itemTwo.PlaceInto(one);
+        // check direction and distance
+        Vector2Int dir = dst.BoardPosition - src.BoardPosition;
+        if (this.MoveDirections.IndexOf(dir) < 0)
+        {
+            return false;
+        }
+        
+        // check if move is succesfull;
+        if (
+            (this.ItemStreakMatcher.FindStreak(dst.BoardPosition, src.GetItem()) == null)
+            &&
+            (this.ItemStreakMatcher.FindStreak(src.BoardPosition, dst.GetItem()) == null)
+            )
+        {
+            return false;
+        }
+        
+        return true;
     }
 }
