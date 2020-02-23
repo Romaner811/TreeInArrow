@@ -2,56 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class StreakTracker {
-    public int LastStreakSize { get; private set; }
-    public int MinStreakSize { get; private set; }
-    public Item LastTrackedValue { get { return this.streak[0]; } }
-
-    private readonly Item[] streak;
-
-    public StreakTracker(int minStreakSize, int maxStreakSize)
-    {
-        this.MinStreakSize = minStreakSize;
-        this.streak = new Item[maxStreakSize];
-    }
-
-    public bool Check(Item value)
-    {
-        return value != null && value.Equals(this.LastTrackedValue);
-    }
-
-    public Item[] GetStreak()
-    {
-        Item[] streak = new Item[this.LastStreakSize];
-        System.Array.Copy(this.streak, streak, this.LastStreakSize);
-        return streak;
-    }
-
-    public Item[] Feed(Item nextValue)
-    {
-        Item[] ret = null;
-
-        if (this.Check(nextValue))
-        {
-            this.LastStreakSize++;
-        }
-        else
-        {
-            if (this.LastTrackedValue != null && this.LastStreakSize >= this.MinStreakSize)
-            {
-                ret = this.GetStreak();
-            }
-
-            this.LastStreakSize = 1;
-        }
-
-        this.streak[this.LastStreakSize - 1] = nextValue;
-
-        return ret;
-    }
-}
-
 public class ItemStreakRule : MonoBehaviour
 {
     public int StreakLength;
@@ -64,7 +14,8 @@ public class ItemStreakRule : MonoBehaviour
         new Vector2Int[] {Vector2Int.right, Vector2Int.left }
     };
 
-    public List<Item> FindStreak(Vector2Int pos, Item subject)
+
+    public List<Item> PredictStreak(Vector2Int pos, Item subject)
     {
         if (subject == null)
         {
@@ -90,7 +41,7 @@ public class ItemStreakRule : MonoBehaviour
                     curPos += direction;
                     curItem = this.GetItemAt(curPos.x, curPos.y);
 
-                    if (!subject.Equals(curItem))
+                    if ((curItem == null) || (subject.TypeID != curItem.TypeID))
                     {
                         break;
                     }
@@ -120,6 +71,56 @@ public class ItemStreakRule : MonoBehaviour
         return null;
     }
 
+    public ICollection<Item> FindStreak(Item subject)
+    {
+        if (subject == null)
+        {
+            return null;
+        }
+
+        int requiredStreakLength = this.StreakLength - 1;  // exclude subject itself
+        ISet<Item> streak = new HashSet<Item>();
+        List<Item> axisStreak = new List<Item>(this.StreakLength * 2);
+
+        foreach (IEnumerable<Vector2Int> axis in this.MatchDirections)
+        {
+            axisStreak.Clear();
+
+            foreach (Vector2Int direction in axis)
+            {
+                Vector2Int curPos = subject.Container.BoardPosition;
+                Item curItem = subject;
+
+                while (true)
+                {
+                    curPos += direction;
+                    curItem = this.GetItemAt(curPos.x, curPos.y);
+
+                    if ((curItem == null) || (subject.TypeID != curItem.TypeID))
+                    {
+                        break;
+                    }
+
+                    axisStreak.Add(curItem);
+                }
+            }
+
+            if (axisStreak.Count >= requiredStreakLength)
+            {
+                streak.UnionWith(axisStreak);
+            }
+        }
+
+        if (streak.Count >= requiredStreakLength)
+        {
+            streak.Add(subject);
+            return streak;
+        }
+
+        return null;
+    }
+
+
     private Item GetItemAt(int x, int y)
     {
         Slot slot = this.SlotBoard.GetSlot(x, y);
@@ -132,28 +133,6 @@ public class ItemStreakRule : MonoBehaviour
         return slot.GetItem();
     }
 
-    private void HandleStreak(Item[] streak)
-    {
-        if (streak == null || streak.Length < this.StreakLength)
-        {
-            return;
-        }
-        print($"streak: {streak.Length}");
-
-        foreach (Item item in streak)
-        {
-            item.Explode();
-            this.Scorer.AddScore(item.Score);
-        }
-    }
-
-    private void TryStreak(StreakTracker tracker, int x, int y)
-    {
-        Item item = this.GetItemAt(x, y);
-        Item[] streak = tracker.Feed(item);
-        this.HandleStreak(streak);
-    }
-
     void Update()
     {
         if (LongBehaviour.RunningBehaviors > 0)
@@ -161,27 +140,26 @@ public class ItemStreakRule : MonoBehaviour
             return;
         }
 
-        int maxSize = Mathf.Max(this.SlotBoard.Width, this.SlotBoard.Heigth) + 1;
+        ISet<Item> allStreaks = new HashSet<Item>();
 
-        for (int i = 0; i < maxSize; i++)
+        for (int y = 0; y < this.SlotBoard.Heigth; y++)
         {
-            StreakTracker horizontalTracker = new StreakTracker(this.StreakLength, this.SlotBoard.Width);
-            StreakTracker verticalTracker = new StreakTracker(this.StreakLength, this.SlotBoard.Heigth);
-
-            for (int j = 0; j < maxSize; j++)
+            for (int x = 0; x < this.SlotBoard.Width; x++)
             {
-                int x, y;
-
-                // horizontal
-                x = j;
-                y = i;
-                this.TryStreak(horizontalTracker, x, y);
-
-                // vertical
-                x = i;
-                y = j;
-                this.TryStreak(verticalTracker, x, y);
+                Item subject = this.GetItemAt(x, y);
+                ICollection<Item> streak = this.FindStreak(subject);
+                if (streak != null)
+                {
+                    print($"streak: {streak.Count}");
+                    allStreaks.UnionWith(streak);
+                }
             }
+        }
+
+        foreach (Item item in allStreaks)
+        {
+            item.Explode();
+            this.Scorer.AddScore(item.Score);
         }
     }
 }

@@ -90,6 +90,10 @@ public class UserInput : MonoBehaviour
             return false;
         }
 
+        //debug!
+        return true;
+
+
         // check direction and distance
         Vector2Int dir = dst.BoardPosition - src.BoardPosition;
         if (this.MoveDirections.IndexOf(dir) < 0)
@@ -99,9 +103,9 @@ public class UserInput : MonoBehaviour
         
         // check if move is succesfull;
         if (
-            (this.ItemStreakMatcher.FindStreak(dst.BoardPosition, src.GetItem()) == null)
+            (this.ItemStreakMatcher.PredictStreak(dst.BoardPosition, src.GetItem()) == null)
             &&
-            (this.ItemStreakMatcher.FindStreak(src.BoardPosition, dst.GetItem()) == null)
+            (this.ItemStreakMatcher.PredictStreak(src.BoardPosition, dst.GetItem()) == null)
             )
         {
             return false;

@@ -65,23 +65,6 @@ public class Item : MonoBehaviour
         this.PlaceInto(null);
     }
 
-    public bool Equals(Object other)
-    {
-        if (other is null)
-        {
-            return false;
-        }
-
-        if (other is Item otherItem)
-        {
-            return this.TypeID == otherItem.TypeID;
-        }
-        else
-        {
-            return base.Equals(other);
-        }
-    }
-
     public override string ToString()
     {
         string original = base.ToString();
