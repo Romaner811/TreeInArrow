@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UserInput : MonoBehaviour
 {
     public ItemStreakRule ItemStreakMatcher;
+
+    public Text ControlsMessage;
+    public float ControlsMessageReappearTimeout;
 
     public int MouseButtonID;
     public IList<Vector2Int> MoveDirections = new List<Vector2Int>()
@@ -16,13 +20,40 @@ public class UserInput : MonoBehaviour
     private Slot start;
     private Slot end;
 
+    private float LastActivity;
+
     private void Awake()
     {
         this.ResetTracking();
+        this.MaybeReappearControlsMessage();
+    }
+
+    private void MaybeReappearControlsMessage()
+    {
+        float delay = this.ControlsMessageReappearTimeout;
+
+        if (this.ControlsMessage.enabled == false)
+        {
+            float idleTime = Time.time - this.LastActivity + 0.1f;
+            if (idleTime >= this.ControlsMessageReappearTimeout)
+            {
+                this.ControlsMessage.enabled = true;
+                this.ControlsMessage.CrossFadeAlpha(1f, 1f, false);
+            }
+            else
+            {
+                delay -= idleTime;
+            }
+        }
+
+        print($"MaybeReappearControlsMessage delay={delay}");
+        this.Invoke("MaybeReappearControlsMessage", delay);
     }
 
     public void ResetTracking()
     {
+        this.LastActivity = Time.time;
+
         this.start?.UnMark();
         this.start = null;
         this.end?.UnMark();
@@ -33,6 +64,13 @@ public class UserInput : MonoBehaviour
     {
         this.start = start;
         start.Mark();
+
+        this.LastActivity = Time.time;
+
+        if (this.ControlsMessage.enabled)
+        {
+            this.ControlsMessage.CrossFadeAlpha(0.1f, 1f, false);
+        }
     }
 
     public void ReportDragHover(Slot end)
@@ -47,7 +85,7 @@ public class UserInput : MonoBehaviour
 
         if (this.CheckSlotSwap(this.start, this.end))
         {
-            this.PreviewMove();
+            this.end.Mark();
         }
     }
 
@@ -57,26 +95,15 @@ public class UserInput : MonoBehaviour
         {
             print($"Swipe {this.start.BoardPosition}>{this.end.BoardPosition - this.start.BoardPosition}: {this.start} -> {this.end}"); // debug
             this.SwapItems(this.start, this.end);
+
+            this.ControlsMessage.enabled = false;
+        }
+        else if (this.ControlsMessage.enabled)
+        {
+            this.ControlsMessage.CrossFadeAlpha(1f, 1f, false);
         }
 
         this.ResetTracking();
-    }
-
-    public void PreviewMove()
-    {
-        this.end.Mark();
-
-        print($"Dragg {this.start.BoardPosition} -> {this.end.BoardPosition - this.start.BoardPosition}"); // debug
-        Debug.DrawLine(
-            this.start.transform.position,
-            this.end.transform.position,
-            Color.Lerp(
-                this.start.GetItem().GetComponent<SpriteRenderer>().color,
-                this.end.GetItem().GetComponent<SpriteRenderer>().color,
-                0.5f  // lerp %
-            ),
-            3f  // duration
-        );
     }
 
     private void SwapItems(Slot src, Slot dst)
