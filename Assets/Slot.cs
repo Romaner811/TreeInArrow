@@ -7,6 +7,17 @@ public class Slot : MonoBehaviour
     public UserInput Inputer;
     public Vector2Int BoardPosition;
 
+    public Color DefaultColor;
+    public Color MarkedColor;
+
+    private SpriteRenderer renderer;
+
+    private void Awake()
+    {
+        this.renderer = this.GetComponent<SpriteRenderer>();
+        this.UnMark();
+    }
+
     private Item content;
 
     public Item GetItem()
@@ -22,6 +33,15 @@ public class Slot : MonoBehaviour
     public bool IsEmpty
     {
         get { return this.content == null; }
+    }
+
+    public void Mark()
+    {
+        this.renderer.color = this.MarkedColor;
+    }
+    public void UnMark()
+    {
+        this.renderer.color = this.DefaultColor;
     }
 
     private void OnMouseDown()
@@ -46,7 +66,6 @@ public class Slot : MonoBehaviour
 
         if (Input.GetMouseButtonUp(this.Inputer.MouseButtonID))
         {
-            //this.Inputer.ReportDragHover(this);
             this.Inputer.ReportDragEnd();
         }
     }

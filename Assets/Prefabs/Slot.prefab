@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60d5564db295a8643ad839223a1d826a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6509804, g: 0.8253024, b: 0.8509804, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inputer: {fileID: 0}
   BoardPosition: {x: 0, y: 0}
+  DefaultColor: {r: 0.6509804, g: 0.8235294, b: 0.8509804, a: 1}
+  MarkedColor: {r: 1, g: 0.9137255, b: 0.7176471, a: 1}
 --- !u!61 &3215485850962939385
 BoxCollider2D:
   m_ObjectHideFlags: 0

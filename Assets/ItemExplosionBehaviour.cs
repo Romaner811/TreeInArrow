@@ -24,7 +24,7 @@ public class ItemExplosionBehaviour : LongBehaviour
         this.Renderer.color = Color.LerpUnclamped(this.Renderer.color, this.transparentColor, this.Progress / 2f);
 
         // scale up
-        this.transform.localScale *= 1f + this.ExplosionSpeed;
+        this.transform.localScale *= 1f + this.ExplosionSpeed * Time.deltaTime;
 
         this.Step(this.ExplosionSpeed);
         if (this.IsFinished)
