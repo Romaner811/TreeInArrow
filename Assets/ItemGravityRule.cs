@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemGravityRule : MonoBehaviour
 {
     public Board SlotBoard;
+    public ItemStreakRule StreakRuleScript;
 
     void Update()
     {
@@ -12,6 +13,8 @@ public class ItemGravityRule : MonoBehaviour
         {
             return;
         }
+
+        bool wasIdle = true;
 
         for (int y = 0; y < this.SlotBoard.Heigth; y++)
         {
@@ -33,8 +36,12 @@ public class ItemGravityRule : MonoBehaviour
                 {
                     Item item = slot.GetItem();
                     item.PlaceInto(below);
+                    wasIdle = false;
                 }
             }
         }
+
+        // if nothing to gravitate - we can match streaks.
+        this.StreakRuleScript.enabled = wasIdle;
     }
 }

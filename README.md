@@ -12,4 +12,4 @@ https://trello.com/b/DFDAocyW
 
 
 * game:
-https://romaner811.github.io/TreeInArrow
+https://romaner811.github.io/TreeInArrow/Release

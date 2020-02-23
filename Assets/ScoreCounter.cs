@@ -25,7 +25,7 @@ public class ScoreCounter : MonoBehaviour
     {
         if (this.shouldUpdate)
         {
-            this.TextObject.text = this.Score.ToString();
+            this.TextObject.text = $"SCORE: {this.Score}";
             this.shouldUpdate = false;
         }
     }

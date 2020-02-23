@@ -35,6 +35,7 @@ public class LongBehaviour : MonoBehaviour
 
     public void Step(float step)
     {
+        step *= Time.deltaTime;
         if (this.CheckProgressComplete())
         {
             this.Finish();
