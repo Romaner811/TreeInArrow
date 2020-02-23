@@ -96,10 +96,6 @@ public class UserInput : MonoBehaviour
             return false;
         }
 
-        //debug!
-        return true;
-
-
         // check direction and distance
         Vector2Int dir = dst.BoardPosition - src.BoardPosition;
         if (this.MoveDirections.IndexOf(dir) < 0)
