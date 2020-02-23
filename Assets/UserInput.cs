@@ -23,13 +23,16 @@ public class UserInput : MonoBehaviour
 
     public void ResetTracking()
     {
+        this.start?.UnMark();
         this.start = null;
+        this.end?.UnMark();
         this.end = null;
     }
 
     public void ReportDragStart(Slot start)
     {
         this.start = start;
+        start.Mark();
     }
 
     public void ReportDragHover(Slot end)
@@ -39,6 +42,7 @@ public class UserInput : MonoBehaviour
             return;
         }
 
+        this.end?.UnMark();
         this.end = end;
 
         if (this.CheckSlotSwap(this.start, this.end))
@@ -60,6 +64,8 @@ public class UserInput : MonoBehaviour
 
     public void PreviewMove()
     {
+        this.end.Mark();
+
         print($"Dragg {this.start.BoardPosition} -> {this.end.BoardPosition - this.start.BoardPosition}"); // debug
         Debug.DrawLine(
             this.start.transform.position,

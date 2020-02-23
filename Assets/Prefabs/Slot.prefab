@@ -97,6 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inputer: {fileID: 0}
   BoardPosition: {x: 0, y: 0}
+  DefaultColor: {r: 0.6509804, g: 0.8235294, b: 0.8509804, a: 1}
+  MarkedColor: {r: 1, g: 0.9137255, b: 0.7176471, a: 1}
 --- !u!61 &3215485850962939385
 BoxCollider2D:
   m_ObjectHideFlags: 0
