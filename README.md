@@ -1,10 +1,9 @@
 # TreeInArrow
 
-My task submission for an interview.
+
+My very first unity game - task submission for an interview.
 
 Match 3 game implementatin.
-
-My very first unity game.
 
 
 * git:
