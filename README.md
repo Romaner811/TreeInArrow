@@ -1,6 +1,8 @@
 # TreeInArrow
 
-CandyCrush like game to test my abilities for 1v1.lol
+My task submission for an interview.
+Match 3 game implementatin.
+My very first unity game.
 
 
 * git:
